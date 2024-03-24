@@ -1,0 +1,22 @@
+#!/bin/bash
+
+name="\e[$1;$2m"
+output="\e[$3;$4m"
+end="\e[0m"
+
+echo -e "$name"HOSTNAME"$end = $output$(hostname)$end"
+echo -e "$name"TIMEZONE"$end = $output$(timedatectl | awk '/Time zone/{print $3}') UTC $(timedatectl | awk '/Time zone/{print $4, $5}')$end"
+echo -e "$name"USER"$end = $output$(whoami)$end"
+echo -e "$name"OS"$end = $output$(cat /etc/issue | awk '//{printf "%s %s %s", $1, $2, $3}')$end"
+echo -e "$name"DATE"$end = $output$(date)$end"
+echo -e "$name"UPTIME"$end = $output$(uptime -p)$end"
+echo -e "$name"UPTIME_SEC"$end = $output$(awk '{print $1}' /proc/uptime)$end"
+echo -e "$name"IP"$end = $output$(hostname -I)$end"
+echo -e "$name"MASK"$end = $output$(ifconfig | awk '/netmask/{print $4;exit}')$end"
+echo -e "$name"GATEWAY"$end = $output$(ip r | awk '/default/{print $3}')$end"
+echo -e "$name"RAM_TOTAL"$end = $output$(awk '/MemTotal:/{$2/=1000000; printf "%.3f GB", $2}' /proc/meminfo)$end"
+echo -e "$name"RAM_USED"$end = $output$(free | awk '/Mem:/{$3/=1000000; printf "%.3f GB", $3}')$end" 
+echo -e "$name"RAM_FREE"$end = $output$(free | awk '/Mem:/{$4/=1000000; printf "%.3f GB", $4}')$end"
+echo -e "$name"SPACE_ROOT"$end = $output$(df /root/ | awk '/\//{$2/=1000; printf "%.2f MB", $2}')$end"
+echo -e "$name"SPACE_ROOT_USED"$end = $output$(df /root/ | awk '/\//{$3/=1000; printf "%.2f MB", $3}')$end"
+echo -e "$name"SPACE_ROOT_FREE"$end = $output$(df /root/ | awk '/\//{$4/=1000; printf "%.2f MB", $4}')$end"

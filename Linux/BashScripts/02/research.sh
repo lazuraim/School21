@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo "HOSTNAME = $(hostname)"
+echo "TIMEZONE = $(timedatectl | awk '/Time zone/{print $3}') UTC $(timedatectl | awk '/Time zone/{print $4, $5}')"
+echo "USER = $(whoami)"
+echo "OS = $(cat /etc/issue | awk '//{printf "%s %s %s", $1, $2, $3}')"
+echo "DATE = $(date)"
+echo "UPTIME = $(uptime -p)"
+echo "UPTIME_SEC = $(awk '{print $1}' /proc/uptime)"
+echo "IP = $(hostname -I)"
+echo "MASK = $(ifconfig | awk '/netmask/{print $4;exit}')"
+echo "GATEWAY = $(ip r | awk '/default/{print $3}')"
+echo "RAM_TOTAL = $(awk '/MemTotal:/{$2/=1000000; printf "%.3f GB", $2}' /proc/meminfo)"
+echo "RAM_USED = $(free | awk '/Mem:/{$3/=1000000; printf "%.3f GB", $3}')" 
+echo "RAM_FREE = $(free | awk '/Mem:/{$4/=1000000; printf "%.3f GB", $4}')"
+echo "SPACE_ROOT = $(df /root/ | awk '/\//{$2/=1000; printf "%.2f MB", $2}')"
+echo "SPACE_ROOT_USED = $(df /root/ | awk '/\//{$3/=1000; printf "%.2f MB", $3}')"
+echo "SPACE_ROOT_FREE = $(df /root/ | awk '/\//{$4/=1000; printf "%.2f MB", $4}')"

@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>calculator.ico</file>
+        <file>pig.png</file>
+        <file>brain.png</file>
+    </qresource>
+</RCC>
